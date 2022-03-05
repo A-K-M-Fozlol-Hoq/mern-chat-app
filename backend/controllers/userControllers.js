@@ -38,4 +38,22 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
 });
-module.exports = { registerUser };
+
+const authUser = asyncHandler(async () => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email: email });
+  if (user && (await User.matchPassword(password))) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid username of password');
+  }
+});
+module.exports = { registerUser, authUser };
