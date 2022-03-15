@@ -8,7 +8,15 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  Input,
+  useToast,
 } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/hooks';
 import { Button } from '@chakra-ui/button';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { chatState } from '../../context/chatProvider';
@@ -22,9 +30,22 @@ const SideDrawer = () => {
   const [loadingChat, setLoadingChat] = useState();
   const { user } = chatState();
   const history = useHistory();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const logoutHandler = () => {
     localStorage.removeItem('userInfo');
     history.push('/');
+  };
+  const toast = useToast();
+  const handleSearch = () => {
+    if (!search) {
+      toast({
+        title: 'Please enter something i search',
+        status: 'warning',
+        duration: 5000,
+        isCLoseable: true,
+        position: 'top-left',
+      });
+    }
   };
   return (
     <>
@@ -38,7 +59,7 @@ const SideDrawer = () => {
         borderWidth="5px"
       >
         <Tooltip label="search Users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost">
+          <Button variant="ghost" onClick={onOpen}>
             <i className="fas fa-search"></i>
             <Text d={{ base: 'none', md: 'flex' }} px="4">
               Search User
@@ -75,6 +96,25 @@ const SideDrawer = () => {
           </Menu>
         </div>
       </Box>
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth="1px">Search users</DrawerHeader>
+          <DrawerBody>
+            <Box d="flex" pb={2}>
+              <Input
+                placeholder="Search by name or email"
+                mr={2}
+                value={search}
+                onClick={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
+              <Button onClick={handleSearch}>GO</Button>
+            </Box>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };
