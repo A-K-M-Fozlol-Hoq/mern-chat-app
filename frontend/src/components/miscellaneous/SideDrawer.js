@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Text } from '@chakra-ui/layout';
+
+import axios from 'axios';
 import {
   Tooltip,
   Menu,
@@ -22,6 +24,7 @@ import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { chatState } from '../../context/chatProvider';
 import ProfileModal from './ProfileModal';
 import { useHistory } from 'react-router-dom';
+import ChatLoading from './ChatLoading';
 
 const SideDrawer = () => {
   const [search, setSearch] = useState('');
@@ -36,13 +39,35 @@ const SideDrawer = () => {
     history.push('/');
   };
   const toast = useToast();
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!search) {
       toast({
         title: 'Please enter something i search',
         status: 'warning',
         duration: 5000,
-        isCLoseable: true,
+        isClosable: true,
+        position: 'top-left',
+      });
+      return;
+    }
+    try {
+      setLoading(true);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      setLoading(false);
+      setSearchResult(data);
+    } catch (e) {
+      toast({
+        title: 'Error Occurred!',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
         position: 'top-left',
       });
     }
@@ -105,13 +130,25 @@ const SideDrawer = () => {
               <Input
                 placeholder="Search by name or email"
                 mr={2}
-                value={search}
-                onClick={(e) => {
+                defaultValue={search}
+                onChange={(e) => {
                   setSearch(e.target.value);
                 }}
               />
               <Button onClick={handleSearch}>GO</Button>
             </Box>
+            {loading ? (
+              <ChatLoading />
+            ) : (
+              // (
+              //   searchResult.map(user => (
+              //     <UserListItem key={user._id} user={user} handleFunction ={()=>accessChat(user._id)}>
+
+              //     </UserListItem>
+              //   ))
+              // )
+              <></>
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>
