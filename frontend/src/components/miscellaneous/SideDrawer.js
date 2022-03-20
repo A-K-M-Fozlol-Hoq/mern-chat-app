@@ -145,6 +145,7 @@ const SideDrawer = () => {
               searchResult.map((user) => (
                 <UserListItem
                   key={user._id}
+                  user={user}
                   handleFunction={() => accessChat(user._id)}
                 ></UserListItem>
               ))
