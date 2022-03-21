@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
-import ChatContext from './context/chatProvider';
+import ChatContext from './context/ChatProvider';
 ReactDOM.render(
   <ChatContext>
     <BrowserRouter>

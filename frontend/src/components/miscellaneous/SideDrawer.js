@@ -21,7 +21,7 @@ import {
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Button } from '@chakra-ui/button';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import { chatState } from '../../context/chatProvider';
+import { chatState } from '../../context/ChatProvider';
 import ProfileModal from './ProfileModal';
 import { useHistory } from 'react-router-dom';
 import ChatLoading from './ChatLoading';

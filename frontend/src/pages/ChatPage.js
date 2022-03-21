@@ -3,7 +3,7 @@ import React from 'react';
 import SideDrawer from '../components/miscellaneous/SideDrawer';
 import MyChats from '../components/MyChats';
 import ChatBox from '../components/ChatBox';
-import { chatState } from '../context/chatProvider';
+import { chatState } from '../context/ChatProvider';
 const ChatPage = () => {
   const { user } = chatState();
   return (
