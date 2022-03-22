@@ -21,7 +21,7 @@ import {
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Button } from '@chakra-ui/button';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import { chatState } from '../../context/ChatProvider';
+import { ChatState } from '../../Context/ChatProvider';
 import ProfileModal from './ProfileModal';
 import { useHistory } from 'react-router-dom';
 import ChatLoading from './ChatLoading';
@@ -32,7 +32,7 @@ const SideDrawer = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
-  const { user } = chatState();
+  const { user } = ChatState();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const logoutHandler = () => {

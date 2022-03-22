@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/toast';
 import axios from 'axios';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [show, setShow] = useState(false);

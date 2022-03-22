@@ -3,9 +3,9 @@ import React from 'react';
 import SideDrawer from '../components/miscellaneous/SideDrawer';
 import MyChats from '../components/MyChats';
 import ChatBox from '../components/ChatBox';
-import { chatState } from '../context/ChatProvider';
+import { ChatState } from '../Context/ChatProvider';
 const ChatPage = () => {
-  const { user } = chatState();
+  const { user } = ChatState();
   return (
     <div style={{ width: '100%' }}>
       {user && <SideDrawer />}
