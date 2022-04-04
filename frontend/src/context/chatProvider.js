@@ -14,28 +14,34 @@ const ChatProvider = ({ children }) => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     setUser(userInfo);
-    console.log(history, 'history', userInfo);
+    // const currentURL = window.location.pathname;
+    // console.log(history, useHistory, 'history', userInfo, currentURL);
     if (!userInfo) {
       history.push('/');
     }
+    console.log(userInfo, history);
   }, [history]);
-
-  return (
-    <ChatContext.Provider
-      value={{
-        selectedChat,
-        setSelectedChat,
-        user,
-        setUser,
-        notification,
-        setNotification,
-        chats,
-        setChats,
-      }}
-    >
-      {children}
-    </ChatContext.Provider>
-  );
+  if (user) {
+    return (
+      <ChatContext.Provider
+        value={{
+          selectedChat,
+          setSelectedChat,
+          user,
+          setUser,
+          notification,
+          setNotification,
+          chats,
+          setChats,
+        }}
+      >
+        {children}
+      </ChatContext.Provider>
+    );
+  }
+  // else {
+  //   return <h1>Login</h1>;
+  // }
 };
 
 export const ChatState = () => {
